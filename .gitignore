@@ -234,3 +234,10 @@ _Pvt_Extensions
 
 # FAKE - F# Make
 .fake/
+
+# User
+*/Engine/*
+*.vcxproj
+*.vcxproj.filters
+*_log.html
+*.sln

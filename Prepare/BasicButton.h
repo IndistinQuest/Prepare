@@ -8,14 +8,15 @@ class BasicButton :
 private:
     State state_m = State::LEFT;
     bool isEnabled_m = true;
-    Shape shape;
+    Shape shape_m;
 public:
     BasicButton(Shape shape);
-    virtual void update()override;
-    State getState()override;
+    virtual void transition()override;
+    State getState()const override;
     bool isEnabled()const;
     void enable();
     void disable();
+    void setState(State state);
     virtual ~BasicButton() = default;
 protected:
     void setState(State state);

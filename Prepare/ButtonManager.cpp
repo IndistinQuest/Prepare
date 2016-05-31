@@ -21,10 +21,16 @@ void ButtonManager::add(std::shared_ptr<ButtonInterface> const &button)
 
 void ButtonManager::update()
 {
+    auto rmend = std::remove_if(buttons_m.begin(), buttons_m.end(), [](std::shared_ptr<ButtonInterface> const &button) {
+        return button->getState() == ButtonInterface::State::REMOVED;
+    });
+    buttons_m.erase(rmend, buttons_m.end());
     std::for_each(buttons_m.begin(), buttons_m.end(), [](std::shared_ptr<ButtonInterface> const &button) {
-        switch (button->getState()) {
-        default:
-            break;
+        if (button->isEnabled()) {
+            button->transition();
+            if (button->getState() == ButtonInterface::State::RELEASED) {
+                button->onClicked();
+            }
         }
-    }
+    });
 }

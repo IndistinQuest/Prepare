@@ -10,7 +10,7 @@ void BasicButton::transition()
 {
     switch (state_m) {
     case State::LEFT:
-        if (shape_m.mouseOver && shape_m.leftReleased) {
+        if (shape_m.mouseOver && !shape_m.leftPressed) {
             state_m = State::MOUSE_OVER;
         }
         else {
@@ -69,5 +69,3 @@ void BasicButton::disable()
 }
 
 
-BasicButton::~BasicButton()
-{}

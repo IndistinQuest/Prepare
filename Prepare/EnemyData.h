@@ -2,28 +2,27 @@
 #include <Siv3D.hpp>
 class EnemyData
 {
-private:
+public:
 	int id_m;
 	String name_m;
-	
-	String collectAnswer_m;
-	String description_m;
-	String class_m;
-
-public:
 	class Messages
 	{
+	public:
 		String onContact_m;
 		String onPlayerWon_m;
 		String onPlayerLost_m;
 	};
+	Messages messages_m;
 	class Answers
 	{
+	public:
 		Array<String> weapon_m;
 		Array<String> magic_m;
 		Array<String> special_m;
 	};
-
+	Answers answers_m;
+	String description_m;
+	String class_m;
 public:
 	EnemyData();
 	~EnemyData();

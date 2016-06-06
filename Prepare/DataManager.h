@@ -1,9 +1,15 @@
 #pragma once
+#include <algorithm>
+#include <Siv3D.hpp>
 #include "EnemyData.h"
 #include "SaveData.h"
 
 class DataManager
 {
+public:
+	JSONReader enemyReader_m;
+	Array<EnemyData> enemies_m;
+
 public:
 	DataManager();
 	~DataManager();

@@ -24,7 +24,7 @@ public:
     /// <summary>
     /// 描画リストに追加する
     /// </summary>
-    /// <param name="drawable"> 描画するオブジェクト <param>
+    /// <param name="drawable"> 描画するオブジェクト </param>
     void add(std::shared_ptr<Drawable> drawable);
 
     /// <summary>

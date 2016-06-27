@@ -1,9 +1,8 @@
 #include "Drawable.h"
 
 
-Drawable::Drawable(const uint32 layer)
-    : m_layer(layer)
-    , m_isVisible(true)
+Drawable::Drawable()
+    : m_isVisible(true)
 {
 }
 
@@ -20,9 +19,4 @@ void Drawable::hide()
 bool Drawable::isVisible() const
 {
     return m_isVisible;
-}
-
-int Drawable::getLayer() const
-{
-    return m_layer;
 }

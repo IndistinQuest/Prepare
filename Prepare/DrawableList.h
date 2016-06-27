@@ -24,8 +24,9 @@ public:
     /// <summary>
     /// 描画リストに追加する
     /// </summary>
-    /// <param name="drawable"> 描画するオブジェクト <param>
-    void add(std::shared_ptr<Drawable> drawable);
+    /// <param name="drawable"> 描画するオブジェクト </param>
+    /// <param name="layer"> レイヤー番号 </param>
+    void add(std::shared_ptr<Drawable> drawable, int layer);
 
     /// <summary>
     /// 全てのオブジェクトを描画する

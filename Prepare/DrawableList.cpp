@@ -6,9 +6,9 @@ DrawableList::~DrawableList()
 {
 }
 
-void DrawableList::add(std::shared_ptr<Drawable> drawable)
+void DrawableList::add(std::shared_ptr<Drawable> drawable, int layer)
 {
-    m_drawables.insert(std::make_pair(drawable->getLayer(), drawable));
+    m_drawables.insert(std::make_pair(layer, drawable));
 }
 
 void DrawableList::drawAll() const

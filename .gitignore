@@ -241,3 +241,4 @@ _Pvt_Extensions
 *.vcxproj.filters
 *_log.html
 *.sln
+*/stdafx.*

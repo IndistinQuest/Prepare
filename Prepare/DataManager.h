@@ -6,9 +6,12 @@
 
 class DataManager
 {
+private:
+	void readEnemyData();
+	void readSaveData();
 public:
-	JSONReader enemyReader_m;
 	Array<EnemyData> enemies_m;
+	Array<SaveData> data_m;
 
 public:
 	DataManager();

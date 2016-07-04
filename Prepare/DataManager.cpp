@@ -4,7 +4,6 @@
 
 DataManager::DataManager()
 {
-	enemyReader_m = JSONReader(L"../JSONData/Enemy.json");
 }
 
 
@@ -16,6 +15,7 @@ int DataManager::getNumOfEnemies()
 {
 	return 0;
 }
+
 EnemyData DataManager::getEnemy(int id)
 {
 	EnemyData objectiveEnemy;
@@ -25,7 +25,10 @@ EnemyData DataManager::getEnemy(int id)
 }
 SaveData DataManager::getSaveData(int id) 
 {
-	return SaveData();
+	SaveData objectiveSaveData;
+	auto searchID = [id](SaveData data) {return data.id_m == id; };
+	objectiveSaveData = *std::find_if(data_m.begin(), data_m.end(), searchID);
+	return objectiveSaveData;
 
 }
 void DataManager::setSaveData(int id, bool defeated)
@@ -35,18 +38,31 @@ void DataManager::setSaveData(int id, bool defeated)
 
 void DataManager::read()
 {
+	readEnemyData();
+	readSaveData();
+
+}
+void DataManager::writeSaveData()
+{
+
+}
+
+void DataManager::readEnemyData()
+{
+	JSONReader enemyReader_m;
+
 	for (auto& object : enemyReader_m[L"Enemy"].getObject())
 	{
 		EnemyData enemy;
 
 		enemy.id_m = object.second[L"id"].get<int32>();
 		enemy.name_m = object.second[L"name"].get<String>();
-		
+
 		enemy.messages_m.onContact_m = object.second[L"messages"][L"onContact"].get<String>();
 		enemy.messages_m.onPlayerWon_m = object.second[L"messages"][L"onPlayerWon"].get<String>();
 		enemy.messages_m.onPlayerLost_m = object.second[L"messages"][L"onPlayerLost"].get<String>();
-		
-		
+
+
 		for (const auto& weapon : object.second[L"Answers"][L"weapon"].getArray())
 		{
 			enemy.answers_m.weapon_m.push_back(weapon.get<String>());
@@ -59,14 +75,25 @@ void DataManager::read()
 		{
 			enemy.answers_m.weapon_m.push_back(special.get<String>());
 		}
-			
+
 		enemy.description_m = object.second[L"description"].get<String>();
 		enemy.class_m = object.second[L"class"].get<String>();
-		
+
 		enemies_m.push_back(enemy);
 	}
 }
-void DataManager::writeSaveData()
-{
 
+void DataManager::readSaveData()
+{
+	JSONReader saveDataReader_m;
+
+	for (auto& object : saveDataReader_m[L"Enemy"].getObject())
+	{
+		SaveData data;
+
+		data.id_m = object.second[L"id"].get<int32>();
+		data.isDefeated_m = object.second[L"defeated"].get<bool>();
+
+		data_m.push_back(data);
+	}
 }

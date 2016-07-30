@@ -1,7 +1,7 @@
 #pragma once
 class SaveData
 {
-private:
+public:
 	int id_m;
 	bool isDefeated_m;
 public:

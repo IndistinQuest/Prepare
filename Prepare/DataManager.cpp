@@ -5,6 +5,11 @@
 DataManager::DataManager()
 {
 	enemyReader_m = JSONReader(L"../JSONData/Enemy.json");
+	saveDataReader_m = CSVReader(L"../CSVData/SaveData.csv");
+	if (!saveDataReader_m || !enemyReader_m)
+	{
+		return;
+	}
 }
 
 
@@ -14,19 +19,17 @@ DataManager::~DataManager()
 
 int DataManager::getNumOfEnemies()
 {
-	return 0;
+	return enemies_m.size();
 }
 EnemyData DataManager::getEnemy(int id)
 {
-	EnemyData objectiveEnemy;
-	auto searchID = [id](EnemyData enemy) {return enemy.id_m == id; };
-	objectiveEnemy = *std::find_if(enemies_m.begin(), enemies_m.end(), searchID);
-	return objectiveEnemy;
+	auto findFromID = [id](EnemyData enemy) {return enemy.id_m == id; };
+	return *std::find_if(enemies_m.begin(), enemies_m.end(), findFromID);
 }
 SaveData DataManager::getSaveData(int id) 
 {
-	return SaveData();
-
+	auto findFromID = [id](SaveData obj) {return obj.id_m == id; };
+	return *std::find_if(saveData_m.begin(), saveData_m.end(), findFromID);
 }
 void DataManager::setSaveData(int id, bool defeated)
 {
@@ -64,6 +67,14 @@ void DataManager::read()
 		enemy.class_m = object.second[L"class"].get<String>();
 		
 		enemies_m.push_back(enemy);
+	}
+
+	for (int i = 0; i < saveDataReader_m.rows; ++i) 
+	{
+		SaveData saveData;
+		saveData.id_m = saveDataReader_m.get<int>(i, 0);
+		saveData.isDefeated_m = saveDataReader_m.get<bool>(i, 1);
+		saveData_m.push_back(saveData);
 	}
 }
 void DataManager::writeSaveData()

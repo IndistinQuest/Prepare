@@ -8,7 +8,9 @@ class DataManager
 {
 public:
 	JSONReader enemyReader_m;
+	CSVReader saveDataReader_m;
 	Array<EnemyData> enemies_m;
+	Array<SaveData> saveData_m;
 
 public:
 	DataManager();

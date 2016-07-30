@@ -4,12 +4,15 @@
 
 DataManager::DataManager()
 {
+<<<<<<< HEAD
 	enemyReader_m = JSONReader(L"../JSONData/Enemy.json");
 	saveDataReader_m = CSVReader(L"../CSVData/SaveData.csv");
 	if (!saveDataReader_m || !enemyReader_m)
 	{
 		return;
 	}
+=======
+>>>>>>> b17b8b223ab16812988cebfcc4a6a7fb8e22c19c
 }
 
 
@@ -21,6 +24,7 @@ int DataManager::getNumOfEnemies()
 {
 	return enemies_m.size();
 }
+
 EnemyData DataManager::getEnemy(int id)
 {
 	auto findFromID = [id](EnemyData enemy) {return enemy.id_m == id; };
@@ -38,18 +42,31 @@ void DataManager::setSaveData(int id, bool defeated)
 
 void DataManager::read()
 {
+	readEnemyData();
+	readSaveData();
+
+}
+void DataManager::writeSaveData()
+{
+
+}
+
+void DataManager::readEnemyData()
+{
+	JSONReader enemyReader_m;
+
 	for (auto& object : enemyReader_m[L"Enemy"].getObject())
 	{
 		EnemyData enemy;
 
 		enemy.id_m = object.second[L"id"].get<int32>();
 		enemy.name_m = object.second[L"name"].get<String>();
-		
+
 		enemy.messages_m.onContact_m = object.second[L"messages"][L"onContact"].get<String>();
 		enemy.messages_m.onPlayerWon_m = object.second[L"messages"][L"onPlayerWon"].get<String>();
 		enemy.messages_m.onPlayerLost_m = object.second[L"messages"][L"onPlayerLost"].get<String>();
-		
-		
+
+
 		for (const auto& weapon : object.second[L"Answers"][L"weapon"].getArray())
 		{
 			enemy.answers_m.weapon_m.push_back(weapon.get<String>());
@@ -62,10 +79,10 @@ void DataManager::read()
 		{
 			enemy.answers_m.weapon_m.push_back(special.get<String>());
 		}
-			
+
 		enemy.description_m = object.second[L"description"].get<String>();
 		enemy.class_m = object.second[L"class"].get<String>();
-		
+
 		enemies_m.push_back(enemy);
 	}
 
@@ -77,7 +94,18 @@ void DataManager::read()
 		saveData_m.push_back(saveData);
 	}
 }
-void DataManager::writeSaveData()
-{
 
+void DataManager::readSaveData()
+{
+	JSONReader saveDataReader_m;
+
+	for (auto& object : saveDataReader_m[L"Enemy"].getObject())
+	{
+		SaveData data;
+
+		data.id_m = object.second[L"id"].get<int32>();
+		data.isDefeated_m = object.second[L"defeated"].get<bool>();
+
+		data_m.push_back(data);
+	}
 }

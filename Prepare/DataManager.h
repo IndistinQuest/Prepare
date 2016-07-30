@@ -6,6 +6,9 @@
 
 class DataManager
 {
+private:
+	void readEnemyData();
+	void readSaveData();
 public:
 	JSONReader enemyReader_m;
 	CSVReader saveDataReader_m;

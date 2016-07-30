@@ -4,15 +4,12 @@
 
 DataManager::DataManager()
 {
-<<<<<<< HEAD
 	enemyReader_m = JSONReader(L"../JSONData/Enemy.json");
 	saveDataReader_m = CSVReader(L"../CSVData/SaveData.csv");
 	if (!saveDataReader_m || !enemyReader_m)
 	{
 		return;
 	}
-=======
->>>>>>> b17b8b223ab16812988cebfcc4a6a7fb8e22c19c
 }
 
 
@@ -42,19 +39,6 @@ void DataManager::setSaveData(int id, bool defeated)
 
 void DataManager::read()
 {
-	readEnemyData();
-	readSaveData();
-
-}
-void DataManager::writeSaveData()
-{
-
-}
-
-void DataManager::readEnemyData()
-{
-	JSONReader enemyReader_m;
-
 	for (auto& object : enemyReader_m[L"Enemy"].getObject())
 	{
 		EnemyData enemy;
@@ -86,26 +70,18 @@ void DataManager::readEnemyData()
 		enemies_m.push_back(enemy);
 	}
 
-	for (int i = 0; i < saveDataReader_m.rows; ++i) 
+	for (int i = 0; i < saveDataReader_m.rows; ++i)
 	{
 		SaveData saveData;
 		saveData.id_m = saveDataReader_m.get<int>(i, 0);
 		saveData.isDefeated_m = saveDataReader_m.get<bool>(i, 1);
 		saveData_m.push_back(saveData);
 	}
-}
 
-void DataManager::readSaveData()
+}
+void DataManager::writeSaveData()
 {
-	JSONReader saveDataReader_m;
 
-	for (auto& object : saveDataReader_m[L"Enemy"].getObject())
-	{
-		SaveData data;
-
-		data.id_m = object.second[L"id"].get<int32>();
-		data.isDefeated_m = object.second[L"defeated"].get<bool>();
-
-		data_m.push_back(data);
-	}
 }
+
+

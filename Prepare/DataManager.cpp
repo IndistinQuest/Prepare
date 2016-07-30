@@ -32,13 +32,13 @@ int DataManager::getNumOfEnemies()
 	return enemies_m.size();
 }
 
-EnemyData& DataManager::getEnemy(int id)
+EnemyData const DataManager::getEnemy(int id)
 {
 	auto findFromID = [id](EnemyData enemy) {return enemy.id_m == id; };
 	return *std::find_if(enemies_m.begin(), enemies_m.end(), findFromID);
 }
 
-SaveData& DataManager::getSaveData(int id) 
+SaveData const DataManager::getSaveData(int id) 
 {
 	auto findFromID = [id](SaveData obj) {return obj.id_m == id; };
 	return *std::find_if(saveData_m.begin(), saveData_m.end(), findFromID);
@@ -46,7 +46,8 @@ SaveData& DataManager::getSaveData(int id)
 
 void DataManager::setSaveData(int id, bool defeated)
 {
-	getSaveData(id).isDefeated_m = defeated;
+	auto findFromID = [id](SaveData obj) {return obj.id_m == id; };
+	(*std::find_if(saveData_m.begin(), saveData_m.end(), findFromID)).isDefeated_m = defeated;
 }
 
 void DataManager::readEnemyData()
